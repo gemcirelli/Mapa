@@ -1,0 +1,139 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+			<script>
+
+			(function(){
+			    var e=document.createElement("script");
+			    e.type="text/javascript";
+			    e.async=true;
+			    e.src='/js/dropdown.js';
+			    var s = document.getElementsByTagName('script')[0];
+			    s.parentNode.insertBefore(e, s);
+			})();
+			</script>
+			<script>
+			// ShareThis Asynchronous Javascript Loading
+			(function(){
+			    var e=document.createElement("script");
+			    e.type="text/javascript";
+			    e.async=true;
+			    e.onload=function(){
+			        try{
+			            stLight.options({publisher: "4cc1bf8a-582d-47c4-adc0-8f4848ddef78", onhover:false});
+			        }catch(e){ /* optionally do something to handle errors here */ }
+			    }
+			    e.src=('https:' == document.location.protocol ? 'https://ws' : 'http://w') + '.sharethis.com/button/buttons.js';
+			    var s = document.getElementsByTagName('script')[0];
+			    s.parentNode.insertBefore(e, s);
+			})();
+			</script>
+	
+			<script type="text/javascript">
+
+				var map;
+				var infowindow;
+
+				function loadScript() {
+					var script = document.createElement('script');
+					script.type = 'text/javascript';
+					script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' +
+					  '&signed_in=false&callback=init';
+					document.body.appendChild(script);
+				}
+				window.onload = loadScript;
+
+			  function init() {
+				map = new google.maps.Map(document.getElementById('map_canvas'), {
+				  zoom: 1,
+				  center: new google.maps.LatLng(10.482748034376769, -66.94536209106445),
+				  mapTypeId: google.maps.MapTypeId.ROADMAP
+				});
+
+				infoWindow = new google.maps.InfoWindow();
+				google.maps.event.addListener(map, 'click', clickedAddress);
+			  }
+
+			  function clickedAddress(event)
+			  {
+			  	document.getElementById('latitude').value = event.latLng.lat();
+			  	document.getElementById('longitude').value = event.latLng.lng();
+			  	findAddress(event.latLng);
+			  }
+
+			  function enteredCoordinates()
+			  {
+			  	var lat = document.getElementById('latitude').value;
+			  	var lng = document.getElementById('longitude').value;
+			  	var point = new google.maps.LatLng(lat, lng);
+			    findAddress(point);
+			  }
+
+			  function findAddress(point) {
+				var geocoder = new google.maps.Geocoder();
+				geocoder.geocode({latLng: point}, function(results, status) {
+				  if (status == google.maps.GeocoderStatus.OK) {
+					if (results[0]) {
+					  infoWindow.setContent(results[0].formatted_address);
+					  infoWindow.setPosition(point);
+					  infoWindow.open(map);
+					}
+				  }
+				});
+			  }
+			  // Register an event listener to fire once when the page finishes loading.
+			 // google.maps.event.addDomListener(window, 'load', init);
+			</script>
+
+<style type="text/css">
+#sidebar {width:200px; height:px; overflow:auto; border:1px solid silver;}
+#map_canvas {width:500px; height:400px; }
+</style>
+
+</head>
+<body>
+
+<div align="center">
+
+<table class="all">
+
+<tbody>
+
+<tr><td width="100%" bgcolor="lightgrey">
+
+<table width="100%" bgcolor="white">
+
+<tbody>
+<tr><td align="center">
+
+
+<span align="left">
+<input type="hidden" name="map_id" id="map_id1" value="">
+<input type="hidden" name="address_lat" id="address_lat" value="">
+<input type="hidden" name="address_lng" id="address_lng" value="">
+<input type="hidden" name="action" id="action" value="test">
+Latitude:<input type="text" name="latitude" id="latitude" value="">
+Longitude:<input type="text" name="longitude" id="longitude" value="">
+<input type="button" value="Find Address" onclick="enteredCoordinates();">
+</span>
+
+</td></tr>
+
+<tr>
+<td>
+<table>
+<tbody><tr><td>
+
+</td></tr>
+<tr>
+	<td valign="top">
+	  <div id="map_canvas" valign="top" style="position: relative; overflow: hidden; transform: translateZ(0px); background-color: rgb(229, 227, 223);">
+	</td>
+
+
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr></tbody></table></div><script type="text/javascript" src="./Reverse Geocode tool - Find the address of a given latitude and longitude_files/js"></script><iframe id="stSegmentFrame" name="stSegmentFrame" src="./Reverse Geocode tool - Find the address of a given latitude and longitude_files/getSegment.html" frameborder="0" scrolling="no" width="0px" height="0px" style="display:none;"></iframe><div id="stwrapper" class="stwrapper stwrapper4x" style="display: none;"><iframe allowtransparency="true" id="stLframe" class="stLframe" name="stLframe" frameborder="0" scrolling="no" src="./Reverse Geocode tool - Find the address of a given latitude and longitude_files/index.e18853ff16b30131c857d1a4c3816e85.html"></iframe></div><div id="stOverlay" onclick="javascript:stWidget.closeWidget();"></div></body></html>
