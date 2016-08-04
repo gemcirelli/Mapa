@@ -1,0 +1,357 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<style type="text/css">
+#sidebar {width:200px; height:px; overflow:auto; border:1px solid silver;}
+#map_canvas {width:525px; 
+			height:400px;
+			margin:0  auto;
+			
+			}
+
+body{  
+    padding: 20px 0px 0px 100px;   /* margen con valores: arriba - derecha - abajo - izquierda */ 
+
+} 
+
+
+fieldset{
+width:80%;
+border-radius: 15px 15px 15px 15px;
+
+}
+table { 
+	border-spacing: 5px;
+	 }
+
+th, td{
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-left: 80px;
+  margin: 10px;
+  width: 100px;
+
+
+}
+
+input, select{
+
+height:25px;
+width:125px;
+margin: 5px;
+padding: 10px;
+border-radius: 15px 15px 15px 15px;
+
+    
+}
+
+
+label{
+padding-top: 10px;
+display: inline-block; width: 100px;
+	margin-right: 10px;
+	margin-left: 15px;
+	font-family : inherit;
+  font-size   : 100%;
+	
+}
+
+#DatosTemplo table th {
+
+height:55px;
+width:550px;
+
+}
+
+#btnBuscarDireccion{
+	margin-top: 30px;
+	height: 30px;
+	padding: 10px;
+}
+
+#thDireccionFisica{
+
+	width:300px;
+	height: 30px;
+}
+
+#direccionfisica {
+	margin-top:none;
+	width: 200px;
+	border-radius: 15px 15px 15px 15px;
+
+}
+
+
+</style>
+
+	<script type="text/javascript">
+				var map;
+				var infowindow;
+
+				function loadScript() {
+					var script = document.createElement('script');
+					script.type = 'text/javascript';
+					script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' +
+					  '&signed_in=false&callback=init';
+					document.body.appendChild(script);
+				}
+				window.onload = loadScript;
+
+			 	 function init() {
+					map = new google.maps.Map(document.getElementById('map_canvas'), {
+					  zoom: 8,
+					  center: new google.maps.LatLng(10.482748034376769, -66.94536209106445),
+					  mapTypeId: google.maps.MapTypeId.ROADMAP
+				});
+				infoWindow = new google.maps.InfoWindow();
+				google.maps.event.addListener(map, 'click', clickedAddress);
+				  }
+			 	 function clickedAddress(event) {
+				  	document.getElementById('latitude').value = event.latLng.lat();
+				  	document.getElementById('longitude').value = event.latLng.lng();
+				  	findAddress(event.latLng);
+			 	 }
+
+			 	 function enteredCoordinates(){
+				  	var lat = document.getElementById('latitude').value;
+				  	var lng = document.getElementById('longitude').value;
+				  	var point = new google.maps.LatLng(lat, lng);
+				    findAddress(point);
+				 }	
+			 		 
+			  	function findAddress(point) {
+					var geocoder = new google.maps.Geocoder();
+					geocoder.geocode({latLng: point}, function(results, status) {
+					    if (status == google.maps.GeocoderStatus.OK) {
+							if (results[0]) {
+						 	 infoWindow.setContent(results[0].formatted_address);
+						  	 infoWindow.setPosition(point);
+						     infoWindow.open(map);
+                            ///////////////////////////////////////////
+ /*                           var address = "", city = "", state = "", zip = "", country = "";
+                             for (var i = 0; i < results[0].address_components.length; i++) {
+					                      var addr = results[0].address_components[i];
+					                      // check if this entry in address_components has a type of country
+					                      if (addr.types[0] == 'country')
+					                          country = addr.long_name;
+					                      else if (addr.types[0] == 'street_address') // address 1
+					                          address = address + addr.long_name;
+					                      else if (addr.types[0] == 'establishment')
+					                          address = address + addr.long_name;
+					                      else if (addr.types[0] == 'route')  // address 2
+					                          address = address + addr.long_name;
+					                      else if (addr.types[0] == 'postal_code')       // Zip
+					                          zip = addr.short_name;
+					                      else if (addr.types[0] == ['administrative_area_level_1'])       // State
+					                          state = addr.long_name;
+					                      else if (addr.types[0] == ['locality'])       // City
+					                          city = addr.long_name;
+                 			 }
+*/
+                				 // alert('City: '+ city + '\n' + 'State: '+ state + '\n' + 'Zip: '+ zip + '\n' + 'Country: ' + country + '\n' + 'calle: ' + address);
+						     //////////////////////////////////////////
+						     var direccion =document.getElementById('direccionfisica');
+						     direccion.value=(results[0].formatted_address);
+
+						   // direccion.value=(results[0].place_id);
+							}
+				 	    }
+					});
+			 	}
+			  // Register an event listener to fire once when the page finishes loading.
+			 // google.maps.event.addDomListener(window, 'load', init);
+	</script>
+</head>
+
+<body>  
+	<form  method="POST"> 
+<fieldset name="Datos Personales" >	
+	<table>
+
+
+
+		<tr>
+			<th>
+				<label for="nombre">Nombre:</label>
+					<input type="text" name="nombre" size="20">
+			</th>
+			<th>
+				<label for="apellido">Apellido:</label>
+					<input type="text" name="apellido" size="20">
+			</th>
+
+			<th>
+				<label for="telefono1">Teléfono 1:</label>
+					<input type="text" name="telefono1" size="20">
+			</th>
+
+			<th>
+				<label for="telefono2">Teléfono 2:</label>
+					<input type="text" name="telefono2">
+			</th>
+		</tr>
+
+
+		<tr>			
+			<th>
+				      <label for="Funcion[]">Función:</label>
+					<select name="Funcion[]"  >					
+							<option value="1">Pastor</option>
+							<option value="2">Apostol</option>
+							<option value="3">Salmista</option>
+							<option value="4">Profeta</option>
+							<option value="5">Obispo</option>
+							<option value="6">Presidente</option>
+							<option value="7">Vicepresidente</option>
+							<option value="8">Otro</option>
+					</select>
+			</th>
+
+			<th>
+				<label for="email">Email 1:</label>
+					<input type="text" name="email" size="20">
+			</th>
+
+			<th>
+				<label for="email">Email 2:</label>
+					<input type="text" name="email2" size="20">
+			</th>
+
+			<th>
+				<label for="email">Email 3:</label>
+					<input type="text" name="email3" size="20">
+			</th>
+
+		</tr>	
+	</table>
+</fieldset>
+
+<fieldset name="Datos de la Denominacion">
+	
+	<table>
+		
+	
+		<tr>
+			<th>
+				<label for="nombreIglesia">Nombre de la iglesa:</label>
+					<input type="text" name="nombreIglesia" size="20">
+			</th>
+			<th>
+				<label for="nombreContactoIglesia">Contacto de la iglesia:</label>
+					<input type="text" name="nombreContactoIglesia" size="20">
+			</th>
+
+			<th>
+				<label for="telefonoContactoIglesia">Telefono de la iglesia:</label>
+					<input type="text" name="telefonoContactoIglesia" size="20">
+			</th>
+
+			<th>
+				<label for="emailIglesia">Email Iglesia:</label>
+					<input type="text" name="emailIglesia">
+			</th>
+		</tr>
+
+
+		<tr>
+			
+			<th>
+				     <label for="Categoria[]">Categoría:</label>
+					<select name="Categoria[]"  >
+					
+							<option value="1">Ortodoxo</option>
+							<option value="2">Católico</option>
+							<option value="3">Protestante</option>
+							<option value="4">Judaísmo</option>
+							<option value="5">Mesiánico</option>
+							<option value="6">Mormonismo</option>
+							<option value="7">Testigos de jehová</option>
+							<option value="8">Otro</option>
+					</select>
+
+			</th>
+
+			<th>
+				<label for="logoIglesia">Logo Iglesia:</label>
+					<input type="text" name="logoIglesia" size="20">
+			</th>
+
+			<th>
+				 Sub Categorìa:
+					<select name="SubCategoria[]"  >
+					
+							<option value="1">Luteranismo</option>
+							<option value="2">Anglicanismo</option>
+							<option value="3">Calvinismo</option>
+							<option value="4">Presbiterianismo</option>
+							<option value="5">Anabaptismo</option>
+							<option value="6">Metodismo</option>
+							<option value="7">Bautista </option>
+							<option value="8">Asamblea de hermanos</option>
+							<option value="9">Adventista</option>
+							<option value="10">Iglesia de dios</option>
+							<option value="11">Anabaptismo</option>
+							<option value="12">Ciencia cristina</option>
+							<option value="13">Nueva apostólica</option>
+							<option value="14">Comunión internacional gracia</option>
+							<option value="15">Evangélica</option>
+							<option value="16">Unitarismo</option>
+							<option value="17">Valdense</option>
+							<option value="18">Pentecostalismo</option>
+							<option value="19">Asamblea de dios</option>
+							<option value="20">Neo-pentecostalismo</option>
+							<option value="21">Otro</option>
+					</select>
+			</th>		
+
+		</tr>
+	
+	</table>
+
+</fieldset>
+
+
+
+
+
+<fieldset  id="DatosTemplo" name="DatosTemplo">
+
+	<table>
+
+		<tr>
+
+			 <th>
+				<label for="latitude">Latitud:</label>
+
+					<input type="text" name="latitude" id="latitude" value="">
+					<label for="longitude">Longitud:</label>	
+					<input type="text" name="longitude" id="longitude" value="">
+
+					<input type="button" id="btnBuscarDireccion" value="Buscar direcciòn" onclick="enteredCoordinates();">
+
+			</th>
+				
+		</tr>	
+
+		<tr>
+
+			<th>
+			 		 <div id="map_canvas" valign="top">
+		  
+			</th>
+
+
+			<th id="thDireccionFisica">		
+					<label for="direccionfisica">Direccion:</label>
+					<textarea name="direccionfisica" id="direccionfisica" readonly="TRUE" style="resize: none ; height:50px   "></textarea> 
+			</th>
+		</tr>
+
+	 </table> 
+
+</fieldset>
+	
+	  </form>
