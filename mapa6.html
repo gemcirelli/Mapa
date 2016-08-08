@@ -40,7 +40,7 @@
 					border-spacing: 5px;
 				 }
 
-			th, td{
+			td, td{
 					  padding-right: 20px;
 					  padding-bottom: 10px;
 					  padding-left: 100px;
@@ -52,11 +52,7 @@
 					height:20px;
 					width:300px;
 					margin-left: 50px;
-
-
-					
-					
-					
+			
 			}
 			select{
 					height:20px;
@@ -75,10 +71,13 @@
 					margin-left: 15px;
 					font-family : inherit;
 					font-size   : 100%;
+					font-weight: bold;
+					text-align: center; 
+
 				
 			}
 
-			#DatosTemplo table th {
+			#DatosTemplo table td {
 
 					height:55px;
 					width:550px;
@@ -94,7 +93,7 @@
 
 			}
 
-			#thDireccionFisica{
+			#tdDireccionFisica{
 
 					width:300px;
 					height: 30px;
@@ -112,7 +111,7 @@
 			.separador{
 
 					width: 90%; 
-					height: 50px;  
+					height: 30px;  
 					text-align: left; 
 					background-color: #088a7f; 
 					font:50% Verdana ; 
@@ -125,10 +124,17 @@
 
 			.spanseparador{
 
-					font-size: 40px; background-color:#088a7f;
+					font-size: 25px; background-color:#088a7f;
 					border-top-left-radius: 6px;  
 
 			}
+
+			td, #fecha, #hora{
+				text-align: center;
+
+			}
+
+			
 
 
 </style>
@@ -177,9 +183,9 @@
 						     infoWindow.open(map);
                             ///////////////////////////////////////////
  /*                           var address = "", city = "", state = "", zip = "", country = "";
-                             for (var i = 0; i < results[0].address_components.length; i++) {
+                             for (var i = 0; i < results[0].address_components.lengtd; i++) {
 					                      var addr = results[0].address_components[i];
-					                      // check if this entry in address_components has a type of country
+					                      // check if tdis entry in address_components has a type of country
 					                      if (addr.types[0] == 'country')
 					                          country = addr.long_name;
 					                      else if (addr.types[0] == 'street_address') // address 1
@@ -206,7 +212,7 @@
 				 	    }
 					});
 			 	}
-			  // Register an event listener to fire once when the page finishes loading.
+			  // Register an event listener to fire once when tde page finishes loading.
 			 // google.maps.event.addDomListener(window, 'load', init);
 
 				function previewFile() {
@@ -228,12 +234,41 @@
 
 				function getTime(){
 
-						var currentTime = new Date()
-						var month = currentTime.getMonth() + 1
-						var day = currentTime.getDate()
-						var year = currentTime.getFullYear()
-						document.write(month + "/" + day + "/" + year)
-						var direccion =document.getElementById('direccionfisica');
+						var today = new Date();
+						var dd = today.getDate();
+						var mm = today.getMonth()+1; //January is 0!
+						var yyyy = today.getFullYear();
+
+						if(dd<10) {
+  								 dd='0'+dd
+						} 
+
+						if(mm<10) {
+						    mm='0'+mm
+						} 
+
+
+						var curHour = today.getHours() > 12 ? today.getHours() - 12 : (today.getHours() < 10 ? "0" + today.getHours() : today.getHours());
+						var curMinute = today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
+						var curSeconds = today.getSeconds() < 10 ? "0" + today.getSeconds() : today.getSeconds();
+						var curMeridiem = today.getHours() > 12 ? "PM" : "AM";
+
+						var horaActual=document.getElementById('hora');
+						horaActual.value= curHour+ ':' + curMinute + ':' + curSeconds + ' ' + curMeridiem;
+						
+
+
+
+						today = mm+'/'+dd+'/'+yyyy;
+
+				
+						var fechaActual =document.getElementById('fecha');
+						fechaActual.value=today;
+
+
+
+
+
 				}
 
 
@@ -245,8 +280,8 @@
 	</script>
 </head>
 
-<body>  
-<form  method="POST"> 
+<body onload="getTime()">  
+<form  metdod="POST"> 
 
 
 <div  class="separador">
@@ -261,29 +296,31 @@
 
 
 
-			<tr>
-				<th>
+			<tr >
+
+				<td >
 					<label for="nombre">Nombre:</label>
 						<input type="text" name="nombre" size="20">
-				</th>
-				<th>
+				</td>
+			 
+				<td>
 					<label for="apellido">Apellido:</label>
 						<input type="text" name="apellido" size="20">
-				</th>
+				</td>
 
 			</tr>
 
 
 			<tr>
-				<th>
+				<td>
 					<label for="telefono1">Teléfono 1:</label>
 						<input type="text" name="telefono1" size="20">
-				</th>
+				</td>
 
-				<th>
+				<td>
 					<label for="telefono2">Teléfono 2:</label>
 						<input type="text" name="telefono2">
-				</th>
+				</td>
 			
 			</tr>	
 
@@ -292,7 +329,7 @@
 
 
 			<tr>			
-				<th>
+				<td>
 					  <label for="Funcion">Función:</label>
 						<select name="Funcion"  >					
 								<option value="1" selected >Pastor</option>
@@ -304,24 +341,24 @@
 								<option value="7">Vicepresidente</option>
 								<option value="8">Otro</option>
 						</select>
-				</th>
+				</td>
 
-				<th>
+				<td>
 					<label for="email">Email 1:</label>
 						<input type="text" name="email" size="20">
-				</th>
+				</td>
 			</tr>
 			
 			<tr>	
-				<th>
+				<td>
 					<label for="email2">Email 2:</label>
 						<input type="text" name="email2" size="20">
-				</th>
+				</td>
 
-				<th>
+				<td>
 					<label for="email3">Email 3:</label>
 						<input type="text" name="email3" size="20">
-				</th>
+				</td>
 
 			</tr>	
 		</table>
@@ -343,31 +380,31 @@
 		
 	
 					<tr>
-						<th>
+						<td>
 							<label for="nombreIglesia">Nombre de la iglesa:</label>
 								<input type="text" name="nombreIglesia" size="20">
-						</th>
-						<th>
+						</td>
+						<td>
 							<label for="nombreContactoIglesia">Contacto de la iglesia:</label>
 								<input type="text" name="nombreContactoIglesia" size="20">
-						</th>
+						</td>
 					</tr>
 					
 					<tr>	
-						<th>
+						<td>
 							<label for="telefonoContactoIglesia">Teléfono de la iglesia:</label>
 								<input type="text" name="telefonoContactoIglesia" size="20">
-						</th>
+						</td>
 
-						<th>
+						<td>
 							<label for="emailIglesia">Email Iglesia:</label>
 								<input type="text" name="emailIglesia">
-						</th>
+						</td>
 					</tr>
 
 					<tr>
 						
-						<th>
+						<td>
 							     <label for="Categoria[]">Categoría:</label>
 								<select name="Categoria[]"  >
 								
@@ -381,9 +418,9 @@
 										<option value="8">Otro</option>
 								</select>
 
-						</th>
+						</td>
 
-						<th>
+						<td>
 
 							 <label for="SubCategoria[]">SubCategoría:</label> 
 								<select name="SubCategoria[]"  >
@@ -412,21 +449,21 @@
 								</select>
 							
 
-						</th>
+						</td>
 					</tr>
 					<tr>	
-						<th>
+						<td>
 								<label for="logoIglesia">Logo Iglesia:</label>
 							
 							<input type="file" style="width:130px" onchange="previewFile()">
 										
 
-						</th>	
-						<th>
+						</td>	
+						<td>
 								<img src="" id="logo"height="200"  width="200" alt="Vista previa del logo"  >
 										
 
-						</th>		
+						</td>		
 					</tr>	
 					
 				
@@ -449,7 +486,7 @@
 
 			<tr>
 
-				 <th>
+				 <td>
 					<label for="latitude">Latitud:</label>
 
 						<input type="text" name="latitude" id="latitude" value="">
@@ -458,22 +495,22 @@
 
 						<input type="button" id="btnBuscarDireccion" value="Buscar dirección" onclick="enteredCoordinates();">
 
-				</th>
+				</td>
 					
 			</tr>	
 
 			<tr>
 
-				<th>
+				<td>
 				 		 <div id="map_canvas" valign="top">
 			  
-				</th>
+				</td>
 
 
-				<th id="thDireccionFisica">		
+				<td id="tdDireccionFisica">		
 						<label for="direccionfisica">Dirección:</label>
 						<textarea name="direccionfisica" id="direccionfisica" readonly="TRUE" style="resize: none ; height:70px   "></textarea> 
-				</th>
+				</td>
 			</tr>
 
 		 </table> 
@@ -491,17 +528,17 @@
       			<table>
 
 					<tr>
-						 <th>
+						 <td>
 							<label for="Fecha">Fecha:</label>
 
-							<input type="text" name="fecha" id="fecha" value="">		
-						</th>						
+							<input type="text" name="fecha" id="fecha" value="" readonly>		
+						</td>						
 						
-						<th>
+						<td>
 							<label for="Hora">Hora:</label>
 
-							<input type="text" name="hora" id="hora" value="">
-						</th>
+							<input type="text" name="hora" id="hora" value="" readonly>
+						</td>
 
 					</tr>
 
